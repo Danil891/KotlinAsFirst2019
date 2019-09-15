@@ -171,11 +171,15 @@ fun triangleKind(a: Double, b: Double, c: Double): Int{
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int{
+    val a1 = abs(a)
+    val b1 = abs(b)
+    val c1 = abs(c)
+    val d1 = abs(d)
     return when {
-        a <= c && b <= d -> b - c
-        a <= c && b >= d -> d - c
-        c <= a && b <= d  && c <= b -> b - a
-        c <= a && b >= d && a <= d-> d - a
+        a1 <= c1 && b1 <= d1 -> b1 - c1
+        a1 <= c1 && b1 >= d1 -> d1 - c1
+        c1 <= a1 && b1 <= d1  && c1 <= b1 -> b1 - a1
+        c1 <= a1 && b1 >= d1 && a1 <= d1 -> d1 - a1
         else -> -1
     }
 }
