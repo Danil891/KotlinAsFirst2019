@@ -5,6 +5,7 @@ package lesson2.task1
 import lesson1.task1.discriminant
 import kotlin.math.abs
 import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sqrt
 
 /**
@@ -141,7 +142,25 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
+fun triangleKind(a: Double, b: Double, c: Double): Int{
+    val c1 = max(max(a, b), c)
+    val a1 = min(min(a, b), c)
+    var b1 = b
+    when{
+        c1 == b && a1 == a || c1 == a && a1 == b -> b1 = c
+        c1 == c && a1 == b || c1 == b && a1 == c -> b1 = a
+    }
+    return if (a1 + b1 > c1 && a1 + c1 > b1 && c1 + b1 > a1) {
+        when {
+            (a1 * a1 + b1 * b1 == c1 * c1) -> 1
+            (a1 * a1 + b1 * b1 > c1 * c1) -> 0
+            else -> 2
+        }
+    }
+    else -1
+}
+
+
 
 /**
  * Средняя
@@ -151,4 +170,12 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int{
+    return when {
+        a <= c && b <= d -> b - c
+        a <= c && b >= d -> d - c
+        c <= a && b <= d  && c <= b -> b - a
+        c <= a && b >= d && a <= d-> d - a
+        else -> -1
+    }
+}
