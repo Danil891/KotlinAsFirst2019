@@ -36,7 +36,7 @@ fun isNumberHappy(number: Int): Boolean {
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean{
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
     val a = x1 == x2 || y1 == y2
     val b = abs(x1 - x2) == abs(y1 - y2)
     return a || b
@@ -49,15 +49,15 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean{
  * Дан номер месяца (от 1 до 12 включительно) и год (положительный).
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
-fun daysInMonth(month: Int, year: Int): Int{
-    val a : Int = if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) {
+fun daysInMonth(month: Int, year: Int): Int {
+    val highness: Int = if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) {
         1
     } else 0
 
     return when {
         (month <= 7 && month % 2 != 0) || (month > 7 && month % 2 == 0) -> 31
-        a == 1 && month == 2 -> 29
-        a != 1 && month == 2 -> 28
+        highness == 1 && month == 2 -> 29
+        highness != 1 && month == 2 -> 28
         else -> 30
     }
 }
@@ -72,13 +72,7 @@ fun daysInMonth(month: Int, year: Int): Int{
 fun circleInside(
     x1: Double, y1: Double, r1: Double,
     x2: Double, y2: Double, r2: Double
-): Boolean {
-    val a = sqrt(sqr(x2 - x1) + sqr( y2 - y1))
-    return  r2 >= r1 + a
-
-
-
-}
+): Boolean = r2 >= r1 + sqrt(sqr(x2 - x1) + sqr(y2 - y1))
 
 /**
  * Средняя
@@ -93,7 +87,7 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean{
     val c1 = max(max(a, b), c)
     val a1 = min(min(a, b), c)
     var b1 = b
-    when{
+    when {
         c1 == b && a1 == a || c1 == a && a1 == b -> b1 = c
         c1 == c && a1 == b || c1 == b && a1 == c -> b1 = a
     }

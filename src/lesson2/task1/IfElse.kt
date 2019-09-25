@@ -71,8 +71,6 @@ fun ageDescription(age: Int): String = when {
     age % 10 in 5..9 -> "$age лет"
     age % 10 == 1 -> "$age год"
     else -> "$age лет"
-
-
 }
 
 /**
@@ -88,11 +86,10 @@ fun timeForHalfWay(
     t3: Double, v3: Double
 ): Double {
     val halfS = (t1 * v1 + t2 * v2 + t3 * v3) / 2
-
     return when{
-        halfS <= t1*v1 -> t1 - (t1 * v1 - halfS ) / v1
+        halfS <= t1 * v1 -> t1 - (t1 * v1 - halfS ) / v1
         halfS <= (t1 * v1 + t2 * v2) -> t1 + (halfS - t1 * v1) / v2
-        else -> t1 + t2 +  (halfS - t1 * v1 - t2 * v2)  / v3 }
+        else -> t1 + t2 + (halfS - t1 * v1 - t2 * v2) / v3 }
  }
 /**
  * Простая
@@ -109,7 +106,7 @@ fun whichRookThreatens(
     rookX2: Int, rookY2: Int
 ): Int = when{
     (kingX == rookX1 || kingX == rookX2) && (kingY == rookY1 || kingY == rookY2) -> 3
-    kingX == rookX1  || kingY == rookY1  -> 1
+    kingX == rookX1 || kingY == rookY1 -> 1
     kingX == rookX2 || kingY == rookY2 -> 2
     else -> 0
 }
@@ -143,17 +140,17 @@ fun rookOrBishopThreatens(
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int{
-    val c1 = max(max(a, b), c)
-    val a1 = min(min(a, b), c)
-    var b1 = b
+    val hypotenuse = maxOf(a, b, c)
+    val catheter1 = minOf(a, b , c)
+    var catheter2: Double = b
     when{
-        c1 == b && a1 == a || c1 == a && a1 == b -> b1 = c
-        c1 == c && a1 == b || c1 == b && a1 == c -> b1 = a
+        hypotenuse == b && catheter1 == a || hypotenuse == a && catheter1 == b -> catheter2 = c
+        hypotenuse == c && catheter1 == b || hypotenuse == b && catheter1 == c -> catheter2 = a
     }
-    return if (a1 + b1 > c1 && a1 + c1 > b1 && c1 + b1 > a1) {
+    return if (catheter1 + catheter2 > hypotenuse && catheter1 + hypotenuse > catheter2 && hypotenuse + catheter2 > catheter1) {
         when {
-            (a1 * a1 + b1 * b1 == c1 * c1) -> 1
-            (a1 * a1 + b1 * b1 > c1 * c1) -> 0
+            (catheter1 * catheter1 + catheter2 * catheter2 == hypotenuse * hypotenuse) -> 1
+            (catheter1 * catheter1 + catheter2 * catheter2 > hypotenuse * hypotenuse) -> 0
             else -> 2
         }
     }
@@ -178,7 +175,7 @@ fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int{
     return when {
         a1 <= c1 && b1 <= d1 -> b1 - c1
         a1 <= c1 && b1 >= d1 -> d1 - c1
-        c1 <= a1 && b1 <= d1  && c1 <= b1 -> b1 - a1
+        c1 <= a1 && b1 <= d1 && c1 <= b1 -> b1 - a1
         c1 <= a1 && b1 >= d1 && a1 <= d1 -> d1 - a1
         else -> -1
     }
