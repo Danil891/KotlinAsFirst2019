@@ -2,6 +2,7 @@
 
 package lesson2.task1
 
+import kotlinx.html.B
 import lesson1.task1.discriminant
 import kotlin.math.abs
 import kotlin.math.max
@@ -86,10 +87,11 @@ fun timeForHalfWay(
     t3: Double, v3: Double
 ): Double {
     val halfS = (t1 * v1 + t2 * v2 + t3 * v3) / 2
-    return when{
+    return when {
         halfS <= t1 * v1 -> t1 - (t1 * v1 - halfS ) / v1
         halfS <= (t1 * v1 + t2 * v2) -> t1 + (halfS - t1 * v1) / v2
-        else -> t1 + t2 + (halfS - t1 * v1 - t2 * v2) / v3 }
+        else -> t1 + t2 + (halfS - t1 * v1 - t2 * v2) / v3
+    }
  }
 /**
  * Простая
@@ -104,11 +106,12 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int = when {
-    (kingX == rookX1 || kingX == rookX2) && (kingY == rookY1 || kingY == rookY2) -> 3
-    kingX == rookX1 || kingY == rookY1 -> 1
-    kingX == rookX2 || kingY == rookY2 -> 2
-    else -> 0
+): Int {
+    var a = 0
+    var b = 0
+    if (kingX == rookX1 || kingY == rookY1) a++
+    if (kingX == rookX2 || kingY == rookY2) b += 2
+    return a + b
 }
 
 /**
@@ -144,18 +147,17 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val hypotenuse = maxOf(a, b, c)
     val catheter1 = minOf(a, b, c)
     var catheter2: Double = b
-    when{
-        hypotenuse == b && catheter1 == a || hypotenuse == a && catheter1 == b -> catheter2 = c
-        hypotenuse == c && catheter1 == b || hypotenuse == b && catheter1 == c -> catheter2 = a
+    when {
+        b > c && c > a || a > c && c > b -> catheter2 = c
+        c > a && a > b || b > a && a > c -> catheter2 = a
     }
-    return if (catheter1 + catheter2 > hypotenuse && catheter1 + hypotenuse > catheter2 && hypotenuse + catheter2 > catheter1) {
-        when {
-            (catheter1 * catheter1 + catheter2 * catheter2 == hypotenuse * hypotenuse) -> 1
-            (catheter1 * catheter1 + catheter2 * catheter2 > hypotenuse * hypotenuse) -> 0
-            else -> 2
-        }
+    val be: Boolean = catheter1 + catheter2 > hypotenuse && catheter1 + hypotenuse > catheter2 && hypotenuse + catheter2 > catheter1
+    return when {
+        catheter1 * catheter1 + catheter2 * catheter2 == hypotenuse * hypotenuse && be -> 1
+        catheter1 * catheter1 + catheter2 * catheter2 > hypotenuse * hypotenuse && be -> 0
+        catheter1 * catheter1 + catheter2 * catheter2 < hypotenuse * hypotenuse && be -> 2
+        else -> -1
     }
-    else -1
 }
 
 
@@ -169,15 +171,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    val a1 = abs(a)
-    val b1 = abs(b)
-    val c1 = abs(c)
-    val d1 = abs(d)
-    return when {
-        a1 <= c1 && b1 <= d1 -> b1 - c1
-        a1 <= c1 && b1 >= d1 -> d1 - c1
-        c1 <= a1 && b1 <= d1 && c1 <= b1 -> b1 - a1
-        c1 <= a1 && b1 >= d1 && a1 <= d1 -> d1 - a1
-        else -> -1
-    }
+    return if (min(b, d) - max(a, c) >= 0 ) min(b, d) - max(a, c)
+    else -1
 }
+
