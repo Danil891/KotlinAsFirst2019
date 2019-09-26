@@ -50,14 +50,12 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
 fun daysInMonth(month: Int, year: Int): Int {
-    val highness: Int = if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) {
-        1
-    } else 0
+    val highness: Boolean = year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)
 
     return when {
         (month <= 7 && month % 2 != 0) || (month > 7 && month % 2 == 0) -> 31
-        highness == 1 && month == 2 -> 29
-        highness != 1 && month == 2 -> 28
+        highness && month == 2 -> 29
+        !highness && month == 2 -> 28
         else -> 30
     }
 }
@@ -84,12 +82,11 @@ fun circleInside(
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean{
-    val c1 = max(max(a, b), c)
-    val a1 = min(min(a, b), c)
-    var b1 = b
+    val minlens = minOf(a, b, c)
+    var midlens = b
     when {
-        c1 == b && a1 == a || c1 == a && a1 == b -> b1 = c
-        c1 == c && a1 == b || c1 == b && a1 == c -> b1 = a
+        b > c && c >= a || a > c && c >= b -> midlens = c
+        c > a && a >= b || b > a && a >= c -> midlens = a
     }
-    return a1 <= min(r, s) && b1 <= max(r, s)
+    return minlens <= min(r, s) && midlens <= max(r, s)
 }

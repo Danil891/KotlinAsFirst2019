@@ -148,8 +148,8 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val catheter1 = minOf(a, b, c)
     var catheter2: Double = b
     when {
-        b > c && c > a || a > c && c > b -> catheter2 = c
-        c > a && a > b || b > a && a > c -> catheter2 = a
+        b > c && c >= a || a > c && c >= b -> catheter2 = c
+        c > a && a >= b || b > a && a >= c -> catheter2 = a
     }
     val be: Boolean = catheter1 + catheter2 > hypotenuse && catheter1 + hypotenuse > catheter2 && hypotenuse + catheter2 > catheter1
     return when {
