@@ -140,9 +140,9 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int{
+fun triangleKind(a: Double, b: Double, c: Double): Int {
     val hypotenuse = maxOf(a, b, c)
-    val catheter1 = minOf(a, b , c)
+    val catheter1 = minOf(a, b, c)
     var catheter2: Double = b
     when{
         hypotenuse == b && catheter1 == a || hypotenuse == a && catheter1 == b -> catheter2 = c
@@ -168,7 +168,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int{
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int{
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
     val a1 = abs(a)
     val b1 = abs(b)
     val c1 = abs(c)
