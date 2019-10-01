@@ -2,7 +2,7 @@
 
 package lesson2.task1
 
-import kotlinx.html.B
+
 import lesson1.task1.discriminant
 import kotlin.math.abs
 import kotlin.math.max
@@ -88,7 +88,7 @@ fun timeForHalfWay(
 ): Double {
     val halfS = (t1 * v1 + t2 * v2 + t3 * v3) / 2
     return when {
-        halfS <= t1 * v1 -> t1 - (t1 * v1 - halfS ) / v1
+        halfS <= t1 * v1 -> t1 - (t1 * v1 - halfS) / v1
         halfS <= (t1 * v1 + t2 * v2) -> t1 + (halfS - t1 * v1) / v2
         else -> t1 + t2 + (halfS - t1 * v1 - t2 * v2) / v3
     }
@@ -108,10 +108,9 @@ fun whichRookThreatens(
     rookX2: Int, rookY2: Int
 ): Int {
     var a = 0
-    var b = 0
     if (kingX == rookX1 || kingY == rookY1) a++
-    if (kingX == rookX2 || kingY == rookY2) b += 2
-    return a + b
+    if (kingX == rookX2 || kingY == rookY2) a += 2
+    return a
 }
 
 /**
@@ -128,13 +127,12 @@ fun rookOrBishopThreatens(
     kingX: Int, kingY: Int,
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
-): Int = when {
-    (kingX == rookX || kingY == rookY) && (abs(kingX - bishopX) == abs(kingY - bishopY)) -> 3
-    kingX == rookX || kingY == rookY -> 1
-    abs(kingX - bishopX) == abs(kingY - bishopY) -> 2
-    else -> 0
+): Int {
+    var a = 0
+    if (kingX == rookX || kingY == rookY) a++
+    if (abs(kingX - bishopX) == abs(kingY - bishopY)) a += 2
+    return a
 }
-
 /**
  * Простая
  *
@@ -171,7 +169,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-    return if (min(b, d) - max(a, c) >= 0 ) min(b, d) - max(a, c)
+    return if (min(b, d) - max(a, c) >= 0) min(b, d) - max(a, c)
     else -1
 }
 

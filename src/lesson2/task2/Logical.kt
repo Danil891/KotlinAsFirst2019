@@ -1,9 +1,8 @@
- @file:Suppress("UNUSED_PARAMETER")
+@file:Suppress("UNUSED_PARAMETER")
 
 package lesson2.task2
 
 import lesson1.task1.sqr
-import ru.spbstu.kotlin.generate.combinators.abs
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
@@ -50,12 +49,12 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
  * Вернуть число дней в этом месяце этого года по григорианскому календарю.
  */
 fun daysInMonth(month: Int, year: Int): Int {
-    val highness: Boolean = year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)
+    val leapYear: Boolean = year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)
 
     return when {
         (month <= 7 && month % 2 != 0) || (month > 7 && month % 2 == 0) -> 31
-        highness && month == 2 -> 29
-        !highness && month == 2 -> 28
+        leapYear && month == 2 -> 29
+        !leapYear && month == 2 -> 28
         else -> 30
     }
 }
