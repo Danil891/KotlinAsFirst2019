@@ -149,7 +149,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
         b > c && c >= a || a > c && c >= b -> catheter2 = c
         c > a && a >= b || b > a && a >= c -> catheter2 = a
     }
-    val be: Boolean = catheter1 + catheter2 > hypotenuse && catheter1 + hypotenuse > catheter2 && hypotenuse + catheter2 > catheter1
+    val be: Boolean =catheter1 + catheter2 > hypotenuse && catheter1 + hypotenuse > catheter2 && hypotenuse + catheter2 > catheter1
     return when {
         catheter1 * catheter1 + catheter2 * catheter2 == hypotenuse * hypotenuse && be -> 1
         catheter1 * catheter1 + catheter2 * catheter2 > hypotenuse * hypotenuse && be -> 0
