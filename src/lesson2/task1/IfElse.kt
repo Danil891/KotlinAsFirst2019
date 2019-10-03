@@ -93,6 +93,7 @@ fun timeForHalfWay(
         else -> t1 + t2 + (halfS - t1 * v1 - t2 * v2) / v3
     }
 }
+
 /**
  * Простая
  *
@@ -133,6 +134,7 @@ fun rookOrBishopThreatens(
     if (abs(kingX - bishopX) == abs(kingY - bishopY)) a += 2
     return a
 }
+
 /**
  * Простая
  *
@@ -158,6 +160,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
         else -> -1
     }
 }
+
 /**
  * Средняя
  *
