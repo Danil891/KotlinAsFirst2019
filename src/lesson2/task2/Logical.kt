@@ -8,7 +8,7 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sqrt
 
- /**
+/**
  * Пример
  *
  * Лежит ли точка (x, y) внутри окружности с центром в (x0, y0) и радиусом r?
@@ -83,8 +83,8 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
     val minlens = minOf(a, b, c)
     var midlens = b
     when {
-        b > c && c >= a || a > c && c > b -> midlens = c
-        c > a && a >= b || b > a && a > c -> midlens = a
+        c in (a + 1) until b || c in (b + 1) until a -> midlens = c
+        a in (b + 1) until c || a in (c + 1) until b -> midlens = a
     }
     return minlens <= min(r, s) && midlens <= max(r, s)
 }
