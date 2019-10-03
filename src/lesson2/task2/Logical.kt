@@ -80,7 +80,7 @@ fun circleInside(
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean{
     val minlens = minOf(a, b, c)
     var midlens = b
     when {
