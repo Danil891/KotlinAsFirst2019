@@ -41,7 +41,6 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
     return a || b
 }
 
-
 /**
  * Простая
  *
@@ -80,12 +79,12 @@ fun circleInside(
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean{
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
     val minlens = minOf(a, b, c)
     var midlens = b
     when {
-        b > c && c >= a || a > c && c >= b -> midlens = c
-        c > a && a >= b || b > a && a >= c -> midlens = a
+        b > c && c >= a || a > c && c > b -> midlens = c
+        c > a && a >= b || b > a && a > c -> midlens = a
     }
     return minlens <= min(r, s) && midlens <= max(r, s)
 }
