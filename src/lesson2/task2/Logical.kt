@@ -80,11 +80,7 @@ fun circleInside(
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    val minlens = minOf(a, b, c)
-    var midlens = b
-    when {
-        c in (a + 1) until b || c in (b + 1) until a -> midlens = c
-        a in (b + 1) until c || a in (c + 1) until b -> midlens = a
-    }
-    return minlens <= min(r, s) && midlens <= max(r, s)
+    val minlen = minOf(a, b, c)
+    val midlen = a + b + c - maxOf(a, b, c) - minlen
+    return minlen <= min(r, s) && midlen <= max(r, s)
 }
