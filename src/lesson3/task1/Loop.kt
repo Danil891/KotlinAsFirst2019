@@ -88,18 +88,17 @@ fun digitNumber(n: Int): Int {
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
 fun fib(n: Int): Int {
-    var n1 = 2
+    var n1 = 1
     var fibN1 = 1
     var fibN2 = 1
     var fibN0: Int
-    if (n in 1..2) return 1
-    else while (n1 != n) {
+    while (n1 != n) {
         fibN0 = fibN1
         fibN1 += fibN2
         fibN2 = fibN0
         n1++
     }
-    return fibN1
+    return fibN2
 }
 
 /**
@@ -135,11 +134,7 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 
-fun maxDivisor(n: Int): Int {
-    var a: Int = n - 1
-    while (n % a != 0) a--
-    return a
-}
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
 
 /**
  * Простая
