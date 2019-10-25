@@ -278,9 +278,8 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * (например, str.toInt(base)), запрещается.
  */
 fun decimalFromString(str: String, base: Int): Int {
-    var str1 = str
     val list = mutableListOf<Int>()
-    for (ch in str1) {
+    for (ch in str) {
         if (ch >= 'a')
             list.add(ch - 'a' + 10)
         else list.add(ch - '0')
