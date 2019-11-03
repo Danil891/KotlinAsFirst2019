@@ -18,7 +18,7 @@ fun shoppingListCost(
     for (item in shoppingList) {
         val itemCost = costs[item]
         if (itemCost != null) {
-            totalCost += itemCost
+            totalCost +=  itemCost
         }
     }
 
