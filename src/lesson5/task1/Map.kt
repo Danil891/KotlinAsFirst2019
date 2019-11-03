@@ -18,7 +18,7 @@ fun shoppingListCost(
     for (item in shoppingList) {
         val itemCost = costs[item]
         if (itemCost != null) {
-            totalCost +=  itemCost
+            totalCost += itemCost
         }
     }
 
@@ -168,8 +168,9 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
             book[key] = book.getOrDefault(key, "") + value
         else book[key] = value
     }
-return book
+    return book
 }
+
 /**
  * Средняя
  *
@@ -208,7 +209,9 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  * Например:
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
-fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
+fun canBuildFrom(chars: List<Char>, word: String): Boolean =
+    chars.toString().toLowerCase().toSet() + word.toLowerCase().toSet() == chars.toString().toLowerCase().toSet()
+
 
 /**
  * Средняя
