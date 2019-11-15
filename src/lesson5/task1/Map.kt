@@ -107,11 +107,8 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "z", "b" to "sweet")) -> true
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
-fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean {
-    var s = false
-    for ((key1, value) in a) if (key1 in b && b.containsValue(value) || a.isEmpty() && b.isEmpty()) s = !s
-    return s
-}
+fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = b == b + a
+
 
 /**
  * Простая
@@ -161,11 +158,9 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = a.toSet().int
  */
 fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
     val book = mapA.toMutableMap()
-    for ((key, value) in mapB)
-        if (key in book) book[key] = book.getOrDefault(key, "") + ", "
     for ((key, value) in mapB) {
-        if (key in book && value != book[key] && !book.containsValue("$value, "))
-            book[key] = book.getOrDefault(key, "") + value
+        if (key in book && value != book[key])
+            book[key] = mapA[key] + ", " + value
         else book[key] = value
     }
     return book
@@ -210,8 +205,8 @@ fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): S
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
 fun canBuildFrom(chars: List<Char>, word: String): Boolean =
-    chars.toString().toLowerCase().toSet().union(word.toLowerCase().toSet()) ==
-            word.toLowerCase().toSet().intersect(chars.toString().toLowerCase().toSet())
+    word.toLowerCase().toSet() ==
+            chars.toString().toLowerCase().toSet().intersect(word.toLowerCase().toSet())
 
 
 /**
@@ -233,6 +228,7 @@ fun extractRepeats(list: List<String>): Map<String, Int> {
     }
     return repeat.filter { it.value >= 2 }
 }
+
 /**
  * Средняя
  *
@@ -287,7 +283,18 @@ fun propagateHandshakes(friends: Map<String, Set<String>>): Map<String, Set<Stri
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    var mini: Int = -1
+    var maxi: Int = -1
+    if (list.isNotEmpty())
+        for (i in list.indices)
+            if (number - list[i] in list && list.indexOf(number - list[i]) != list.indexOf(list[i])) {
+                mini = i
+                maxi = list.indexOf(number - list[i])
+                break
+            }
+    return Pair(mini, maxi);
+}
 
 /**
  * Очень сложная
