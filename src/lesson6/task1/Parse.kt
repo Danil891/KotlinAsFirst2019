@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+
 /**
  * Пример
  *
@@ -69,7 +71,18 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+
+
+fun dateStrToDigit(str: String): String {
+    val parts = str.split(" ")
+    val months = listOf(
+        "января", "февраля", "марта", "апреля", "мая", "июня",
+        "июля", "августа", "сентября", "октября", "ноября", "декабря"
+    )
+    if (parts.size != 3 || parts[1] !in months || parts[0].toIntOrNull() == null || parts[2].toIntOrNull() == null) return ""
+    if (parts[0].toInt() > daysInMonth(months.indexOf(parts[1]) + 1, parts[2].toInt())) return ""
+    return String.format("%02d.%02d.%d", parts[0].toInt(), months.indexOf(parts[1]) + 1, parts[2].toInt())
+}
 
 /**
  * Средняя
@@ -81,7 +94,19 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val parts = digital.split(".")
+    val months = listOf(
+        "января", "февраля", "марта", "апреля", "мая", "июня",
+        "июля", "августа", "сентября", "октября", "ноября", "декабря"
+    )
+    if (!digital.matches(Regex("""[0-9]+\.[0-9]+\.[0-9]+"""))) return ""
+    if (parts.size != 3 || parts[0].toInt() > daysInMonth(parts[1].toInt(), parts[2].toInt())
+        || parts[1].toInt() * parts[0].toInt() == 0
+    ) return ""
+
+    return String.format("%d %s %d", parts[0].toInt(), months[(parts[1]).toInt() - 1], parts[2].toInt())
+}
 
 /**
  * Средняя
@@ -109,7 +134,14 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    val intJump = mutableListOf<Int>()
+    if (!jumps.matches(Regex("""(\d+|\-\%)(\s(\d+|\-|\%))*"""))) return -1
+    val distans = jumps.split(" ").filter { it != "-" && it != "%" }
+    for (i in distans) intJump.add(i.toInt())
+    if (intJump.isEmpty()) return -1
+    return intJump.max()!!
+}
 
 /**
  * Сложная
@@ -122,7 +154,13 @@ fun bestLongJump(jumps: String): Int = TODO()
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+    val goodJumps = jumps.split(" ")
+    val higher = mutableListOf<Int>()
+    for (i in goodJumps.indices) if (goodJumps[i].contains("+")) higher.add(goodJumps[i - 1].toInt())
+    if (higher.isEmpty()) return -1
+    return higher.max()!!
+}
 
 /**
  * Сложная
