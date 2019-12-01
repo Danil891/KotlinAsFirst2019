@@ -102,7 +102,7 @@ fun dateDigitToStr(digital: String): String {
     )
     if (!digital.matches(Regex("""[0-9]+\.[0-9]+\.[0-9]+"""))) return ""
     if (parts.size != 3 || parts[0].toInt() > daysInMonth(parts[1].toInt(), parts[2].toInt())
-        || parts[1].toInt() * parts[0].toInt() == 0
+        || parts[1].toInt() * parts[0].toInt() == 0 || parts[1].toInt() > 12
     ) return ""
 
     return String.format("%d %s %d", parts[0].toInt(), months[(parts[1]).toInt() - 1], parts[2].toInt())
