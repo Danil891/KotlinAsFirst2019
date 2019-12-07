@@ -158,6 +158,7 @@ fun bestLongJump(jumps: String): Int {
  */
 fun bestHighJump(jumps: String): Int {
     val goodJumps = jumps.split(" ")
+    if (!jumps.matches(Regex("""(\d+|[%\-+])(\s|(\d+|[%\-+]))*"""))) return -1
     val higher = mutableListOf<Int>()
     for (i in goodJumps.indices) if (goodJumps[i].contains("+")) higher.add(goodJumps[i - 1].toInt())
     if (higher.isEmpty()) return -1
