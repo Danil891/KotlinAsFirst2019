@@ -71,16 +71,20 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
+val months = listOf(
+    "января", "февраля", "марта", "апреля", "мая", "июня",
+    "июля", "августа", "сентября", "октября", "ноября", "декабря"
+)
 
 
 fun dateStrToDigit(str: String): String {
     val parts = str.split(" ")
-    val months = listOf(
-        "января", "февраля", "марта", "апреля", "мая", "июня",
-        "июля", "августа", "сентября", "октября", "ноября", "декабря"
-    )
-    if (parts.size != 3 || parts[1] !in months || parts[0].toIntOrNull() == null || parts[2].toIntOrNull() == null) return ""
-    if (parts[0].toInt() > daysInMonth(months.indexOf(parts[1]) + 1, parts[2].toInt())) return ""
+    val mapMonths = mutableMapOf<String, Int>()
+    for (i in months.indices) mapMonths[months[i]] = i + 1
+    if (parts.size != 3 || parts[1] !in months || parts[0].toIntOrNull() == null
+        || parts[2].toIntOrNull() == null) return ""
+    if (parts[0].toInt() > daysInMonth(mapMonths[parts[1]]!!, parts[2].toInt()))
+        return ""
     return String.format("%02d.%02d.%d", parts[0].toInt(), months.indexOf(parts[1]) + 1, parts[2].toInt())
 }
 
@@ -96,16 +100,14 @@ fun dateStrToDigit(str: String): String {
  */
 fun dateDigitToStr(digital: String): String {
     val parts = digital.split(".")
-    val months = listOf(
-        "января", "февраля", "марта", "апреля", "мая", "июня",
-        "июля", "августа", "сентября", "октября", "ноября", "декабря"
-    )
+    val mapMonths = mutableMapOf<Int, String>()
+    for (i in months.indices) mapMonths[i + 1] = months[i]
+
     if (!digital.matches(Regex("""[0-9]+\.[0-9]+\.[0-9]+"""))) return ""
     if (parts.size != 3 || parts[0].toInt() > daysInMonth(parts[1].toInt(), parts[2].toInt())
         || parts[1].toInt() * parts[0].toInt() == 0 || parts[1].toInt() > 12
     ) return ""
-
-    return String.format("%d %s %d", parts[0].toInt(), months[(parts[1]).toInt() - 1], parts[2].toInt())
+    return String.format("%d %s %d", parts[0].toInt(), mapMonths[parts[1].toInt()], parts[2].toInt())
 }
 
 /**
