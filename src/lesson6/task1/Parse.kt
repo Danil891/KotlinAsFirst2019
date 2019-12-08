@@ -174,7 +174,17 @@ fun bestHighJump(jumps: String): Int {
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    require(expression.matches(Regex("""\d+((\s[\+\-])(\s\d+)(\s[\+\-]\s\d+)?)*""")))
+    val parts = expression.split(" ")
+    var sum = parts[0].toInt()
+    for (elem in 1 until parts.size) when {
+        parts.size == 1 -> sum = parts[0].toInt()
+        parts[elem] == "+" -> sum += parts[elem + 1].toInt()
+        parts[elem] == "-" -> sum -= parts[elem + 1].toInt()
+    }
+return sum
+}
 
 /**
  * Сложная
@@ -185,7 +195,15 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    if (!str.matches(Regex("""(\w+(\s\w+\s)?)*"""))) return -1
+    val parts = str.split(" ")
+    for (i in parts.indices - 1)
+        if (parts[i].toLowerCase() == parts[i + 1].toLowerCase()) return i
+    return -1
+}
+
+// (\w+(\s\w+\s)?)*
 
 /**
  * Сложная
