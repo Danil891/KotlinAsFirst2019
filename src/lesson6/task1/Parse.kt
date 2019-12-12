@@ -76,16 +76,22 @@ val months = listOf(
     "июля", "августа", "сентября", "октября", "ноября", "декабря"
 )
 
+fun mapMon(month: List<String>): MutableMap<String, Int> {
+    val mapMonths = mutableMapOf<String, Int>()
+    for (i in months.indices) mapMonths[months[i]] = i + 1
+    return mapMonths
+}
+val mapMonths = mapMon(months)
+
 
 fun dateStrToDigit(str: String): String {
     val parts = str.split(" ")
-    val mapMonths = mutableMapOf<String, Int>()
-    for (i in months.indices) mapMonths[months[i]] = i + 1
     if (parts.size != 3 || parts[1] !in months || parts[0].toIntOrNull() == null
-        || parts[2].toIntOrNull() == null) return ""
+        || parts[2].toIntOrNull() == null
+    ) return ""
     if (parts[0].toInt() > daysInMonth(mapMonths[parts[1]]!!, parts[2].toInt()))
         return ""
-    return String.format("%02d.%02d.%d", parts[0].toInt(), months.indexOf(parts[1]) + 1, parts[2].toInt())
+    return String.format("%02d.%02d.%d", parts[0].toInt(), mapMonths[parts[1]], parts[2].toInt())
 }
 
 /**
@@ -100,14 +106,12 @@ fun dateStrToDigit(str: String): String {
  */
 fun dateDigitToStr(digital: String): String {
     val parts = digital.split(".")
-    val mapMonths = mutableMapOf<Int, String>()
-    for (i in months.indices) mapMonths[i + 1] = months[i]
 
     if (!digital.matches(Regex("""[0-9]+\.[0-9]+\.[0-9]+"""))) return ""
     if (parts.size != 3 || parts[0].toInt() > daysInMonth(parts[1].toInt(), parts[2].toInt())
         || parts[1].toInt() * parts[0].toInt() == 0 || parts[1].toInt() > 12
     ) return ""
-    return String.format("%d %s %d", parts[0].toInt(), mapMonths[parts[1].toInt()], parts[2].toInt())
+    return String.format("%d %s %d", parts[0].toInt(), months[parts[1].toInt() - 1], parts[2].toInt())
 }
 
 /**
@@ -140,9 +144,9 @@ fun bestLongJump(jumps: String): Int {
     val intJump = mutableListOf<Int>()
     if (!jumps.matches(Regex("""(\d+|\-\%)(\s(\d+|\-|\%))*"""))) return -1
     val distans = jumps.split(" ").filter { it != "-" && it != "%" }
-    for (i in distans) intJump.add(i.toInt())
-    if (intJump.isEmpty()) return -1
-    return intJump.max()!!
+    var maxD = 0
+    for (i in distans) if (i.toInt() > maxD) maxD = i.toInt()
+    return maxD
 }
 
 /**
@@ -183,7 +187,7 @@ fun plusMinus(expression: String): Int {
         parts[elem] == "+" -> sum += parts[elem + 1].toInt()
         parts[elem] == "-" -> sum -= parts[elem + 1].toInt()
     }
-return sum
+    return sum
 }
 
 /**
