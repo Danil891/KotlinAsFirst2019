@@ -191,7 +191,23 @@ fun top20Words(inputName: String): Map<String, Int> = TODO()
  * Обратите внимание: данная функция не имеет возвращаемого значения
  */
 fun transliterate(inputName: String, dictionary: Map<Char, String>, outputName: String) {
-    TODO()
+    val changedD = mutableMapOf<String, String>()
+    val output = File(outputName).bufferedWriter()
+
+    for ((key, value) in dictionary) changedD[key.toString().toLowerCase()] = value.toLowerCase()
+
+    for (symbol in File(inputName).readText()) {
+        val lowLet = symbol.toLowerCase().toString()
+        val upperLet = symbol.isUpperCase()
+
+        if (changedD.contains(lowLet)) {
+            var changedLet = changedD[lowLet]!!
+            if (upperLet)
+                changedLet = changedLet.capitalize()
+            output.write(changedLet)
+        } else output.write(symbol.toString())
+    }
+    output.close()
 }
 
 /**
