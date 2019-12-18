@@ -190,7 +190,23 @@ fun kingMoveNumber(start: Square, end: Square): Int {
  *          kingTrajectory(Square(3, 5), Square(6, 2)) = listOf(Square(3, 5), Square(4, 4), Square(5, 3), Square(6, 2))
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun kingTrajectory(start: Square, end: Square): List<Square> = TODO()
+fun kingTrajectory(start: Square, end: Square): List<Square> {
+    val trKing = mutableListOf(start)
+    var x = start.column
+    var y = start.row
+    while (Square(x, y) != end) {
+        when {
+            x < end.column -> x++
+            x > end.column -> x--
+        }
+        when {
+            y < end.row -> y++
+            y > end.row -> y--
+        }
+        trKing.add(Square(x, y))
+    }
+    return trKing
+}
 
 /**
  * Сложная
