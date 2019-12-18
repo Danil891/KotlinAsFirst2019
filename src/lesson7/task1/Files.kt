@@ -132,7 +132,7 @@ fun centerFile(inputName: String, outputName: String) {
  * 8) Если входной файл удовлетворяет требованиям 1-7, то он должен быть в точности идентичен выходному файлу
  */
 fun alignFileByWidth(inputName: String, outputName: String) {
-    TODO()
+
 }
 
 /**
@@ -156,7 +156,7 @@ fun alignFileByWidth(inputName: String, outputName: String) {
 fun top20Words(inputName: String): Map<String, Int> {
     val story = File(inputName).readText()
     val listOfWords = mutableMapOf<String, Int>()
-    val words = story.toLowerCase().split(Regex("""[^ёЁА-яA-z]+"""))
+    val words = story.toLowerCase().split(Regex("""[^Ёёа-яА-Яa-zA-Z]+"""))
 
     if (story.isEmpty()) return mutableMapOf()
     for (word in words) listOfWords[word] = listOfWords.getOrDefault(word, 0) + 1
